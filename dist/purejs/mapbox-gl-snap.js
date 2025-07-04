@@ -5508,6 +5508,12 @@
         MapboxSnap.prototype.setStatus = function (s) {
             this.status = s;
         };
+        MapboxSnap.prototype.setMapData = function (featureCollection) {
+            var source = this.map.getSource('snap-helper-circle');
+            if (source) {
+                source.setData(featureCollection);
+            }
+        };
         MapboxSnap.prototype.snapToClosestPoint = function (e) {
             if (this.status) {
                 var point = e.point;
@@ -5528,10 +5534,7 @@
                     this.snapCoords = [];
                 }
                 var circleGeoJSON = featureCollection$2(circle$1 == false ? [] : [circle$1]);
-                var source = this.map.getSource('snap-helper-circle');
-                if (source) {
-                    source.setData(circleGeoJSON);
-                }
+                this.setMapData(circleGeoJSON);
             }
         };
         MapboxSnap.prototype.addEvents = function () {
@@ -5559,10 +5562,8 @@
                     _this.status = true;
                 }
                 else {
-                    setTimeout(function () {
-                        _this.changeSnappedPoints();
-                    }, 100);
                     _this.status = false;
+                    _this.setMapData(featureCollection([]));
                 }
             });
             this.map.on('draw.modechange', function (e) {

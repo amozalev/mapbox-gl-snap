@@ -141,6 +141,12 @@ var MapboxSnap = /** @class */ (function () {
     MapboxSnap.prototype.setStatus = function (s) {
         this.status = s;
     };
+    MapboxSnap.prototype.setMapData = function (featureCollection) {
+        var source = this.map.getSource('snap-helper-circle');
+        if (source) {
+            source.setData(featureCollection);
+        }
+    };
     MapboxSnap.prototype.snapToClosestPoint = function (e) {
         if (this.status) {
             var point = e.point;
@@ -161,10 +167,7 @@ var MapboxSnap = /** @class */ (function () {
                 this.snapCoords = [];
             }
             var circleGeoJSON = featureCollection(circle == false ? [] : [circle]);
-            var source = this.map.getSource('snap-helper-circle');
-            if (source) {
-                source.setData(circleGeoJSON);
-            }
+            this.setMapData(circleGeoJSON);
         }
     };
     MapboxSnap.prototype.addEvents = function () {
@@ -192,10 +195,8 @@ var MapboxSnap = /** @class */ (function () {
                 _this.status = true;
             }
             else {
-                setTimeout(function () {
-                    _this.changeSnappedPoints();
-                }, 100);
                 _this.status = false;
+                _this.setMapData(featureCollection([]));
             }
         });
         this.map.on('draw.modechange', function (e) {

@@ -24,12 +24,12 @@ Depending on whether you are using, Browser(`purejs`) ES Modules (`import`) or C
 
 - **For ES Modules (`import`)**:
   ```javascript
-  import MapboxSnap from 'mapbox-gl-snap/dist/cjs/MapboxSnap';
+  import MapboxSnap from 'mapbox-gl-snap/dist/esm/MapboxSnap';
   ```
 
 - **For CommonJS (`require`)**:
   ```javascript
-  const MapboxSnap = require('mapbox-gl-snap/dist/esm/MapboxSnap');
+  const MapboxSnap = require('mapbox-gl-snap/dist/cjs/MapboxSnap');
   ```
 
 ## Features
